@@ -123,8 +123,8 @@ export default function Navbar() {
         }
 
         @media (max-width: 768px) {
-          .navbar { padding: 0 20px; }
-          .navbar-brand img { height: 200px; }
+          .navbar { padding: 0 20px 0 0px; }
+          .navbar-brand img { height: 200px;}
           .navbar-links { display: none; }
           .hamburger { display: flex; }
         }
