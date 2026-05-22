@@ -1,4 +1,58 @@
+import { useEffect, useRef, useState } from 'react';
 import aboutImg from '../assets/about.JPG';
+
+const TYPED_TEXT = [
+  "🎵 Founded in Lagos with passion.",
+  "🎸 6 instruments, all skill levels.",
+  "🎤 Learn from expert instructors.",
+  "🏆 Shaping Nigeria's next musicians.",
+];
+
+function Typewriter() {
+  const [lines, setLines] = useState([]);
+  const [lineIdx, setLineIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const ref = useRef(null);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setStarted(true); },
+      { threshold: 0.4 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started || lineIdx >= TYPED_TEXT.length) return;
+    const current = TYPED_TEXT[lineIdx];
+    if (charIdx < current.length) {
+      const t = setTimeout(() => setCharIdx(c => c + 1), 40);
+      return () => clearTimeout(t);
+    } else {
+      const t = setTimeout(() => {
+        setLines(prev => [...prev, current]);
+        setLineIdx(i => i + 1);
+        setCharIdx(0);
+      }, 300);
+      return () => clearTimeout(t);
+    }
+  }, [started, lineIdx, charIdx]);
+
+  const currentTyping = lineIdx < TYPED_TEXT.length
+    ? TYPED_TEXT[lineIdx].slice(0, charIdx)
+    : null;
+
+  return (
+    <div ref={ref} className="typewriter-block">
+      {lines.map((line, i) => <p key={i} className="typed-line done">{line}</p>)}
+      {currentTyping !== null && (
+        <p className="typed-line typing">{currentTyping}<span className="cursor">|</span></p>
+      )}
+    </div>
+  );
+}
 
 export default function About() {
   return (
@@ -79,20 +133,28 @@ export default function About() {
           color: #1a1a2e;
           margin-bottom: 12px;
         }
-        .about-card .card-lines {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
+
+        /* Typewriter */
+        .typewriter-block {
           margin-bottom: 20px;
+          min-height: 88px;
         }
-        .card-line {
-          height: 8px;
-          background: #e3f2fd;
-          border-radius: 4px;
+        .typed-line {
+          font-size: 0.88rem;
+          color: #444;
+          line-height: 1.7;
+          margin: 0 0 4px;
         }
-        .card-line.w-full { width: 100%; }
-        .card-line.w-3-4 { width: 75%; }
-        .card-line.w-half { width: 50%; }
+        .typed-line.done { color: #333; }
+        .typed-line.typing { color: #2196f3; }
+        .cursor {
+          display: inline-block;
+          animation: blink 0.7s step-start infinite;
+          font-weight: 300;
+          color: #2196f3;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
         .about-card-img {
           width: 100%;
           height: 300px;
@@ -126,14 +188,11 @@ export default function About() {
           font-size: 0.78rem;
           display: block;
         }
-
         @media (max-width: 768px) {
           .about-section { padding: 60px 20px; }
           .about-inner { grid-template-columns: 1fr; gap: 36px; }
           .about-text h3 { text-align: center; }
-          .about-text p { text-align: left; }
           .about-contact-btn-container { display: flex; justify-content: center; }
-    
         }
         @media (max-width: 480px) {
           .about-section { padding: 48px 16px; }
@@ -146,10 +205,7 @@ export default function About() {
           <div className="about-text">
             <h3>Best in Our <span>Service</span> Delivery</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Steph Music Academy was founded by Stephen Aramawo with a single dream — to make world-class music education accessible to every passionate soul in Nigeria and beyond. What began as private lessons in a small Lagos studio has grown into a thriving community of musicians, performers, and creators who share one language: music. We believe learning music should feel like a journey, not a chore. Our instructors blend traditional technique with modern creativity, giving each student a personalised path. At Steph Music Academy, our mission is simple: unlock the musician in you. We are committed to nurturing talent at every level, celebrating every milestone no matter how small, and building a supportive community where students grow not just as musicians, but as artists with a voice. Your sound matters and we are here to help you share it with the world.
             </p>
             <div className="about-contact-btn-container">
               <a href="#contact" className="about-contact-btn">Contact Us</a>
@@ -158,14 +214,13 @@ export default function About() {
 
           <div className="about-card">
             <div className="card-header">About our Company</div>
-            <div className="card-lines">
-              <div className="card-line w-full" />
-              <div className="card-line w-3-4" />
-              <div className="card-line w-full" />
-              <div className="card-line w-half" />
-            </div>
+
+            <Typewriter />
+
             <div className="card-title">Welcome to Our Music School and Online Course</div>
-            <div className="about-card-img"><img src={aboutImg} alt="About image" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px'}} /></div>
+            <div className="about-card-img">
+              <img src={aboutImg} alt="About image" style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'12px'}} />
+            </div>
             <div className="about-card-footer">
               <div className="avatar">SA</div>
               <div>
