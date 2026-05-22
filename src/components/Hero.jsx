@@ -3,9 +3,93 @@
 // COPY THIS FILE → src/components/Hero.jsx
 // ============================================================
 
-import hero1 from '../assets/hero1.jpeg';
-import hero2 from '../assets/hero2.jpeg';
-import hero3 from '../assets/hero3.jpeg';
+import { useState } from 'react';
+import hero1 from '../assets/hero1.JPG';
+import hero2 from '../assets/hero2.JPG';
+import hero3 from '../assets/hero3.JPG';
+import hero4 from '../assets/hero4.JPG';
+import hero5 from '../assets/hero5.JPG';
+import hero6 from '../assets/hero6.JPG';
+import hero7 from '../assets/hero7.JPG';
+import hero8 from '../assets/hero8.JPG';
+import hero9 from '../assets/hero9.JPG';
+import hero10 from '../assets/hero10.JPG';
+import hero11 from '../assets/hero11.JPG';
+import hero12 from '../assets/hero12.JPG';
+import hero13 from '../assets/hero13.JPG';
+import hero14 from '../assets/hero14.JPG';
+import hero15 from '../assets/hero15.JPG';
+import hero16 from '../assets/hero16.JPG';
+import hero17 from '../assets/hero17.JPG';
+import hero18 from '../assets/hero18.JPG';
+
+// 4 images per carousel slot — replace these arrays with your actual imports or URLs
+const galleryImages = [
+  [
+    hero1,
+    hero2,
+    hero3,
+    hero4, 
+    hero5, 
+  ],
+  [
+    hero6,
+    hero7,
+    hero8,
+    hero9,
+    hero10,
+    hero11,
+  ],
+  [
+    hero12,
+    hero13,
+    hero14,
+    hero15,
+    hero16,
+    hero17,
+    hero18,
+  ],
+];
+
+function MiniCarousel({ images, index }) {
+  const [current, setCurrent] = useState(0);
+
+  const prev = (e) => {
+    e.stopPropagation();
+    setCurrent((c) => (c - 1 + images.length) % images.length);
+  };
+  const next = (e) => {
+    e.stopPropagation();
+    setCurrent((c) => (c + 1) % images.length);
+  };
+
+  return (
+    <div className="mini-carousel">
+      <img
+        src={images[current]}
+        alt={`Gallery ${index + 1} slide ${current + 1}`}
+        className="mini-carousel-img"
+      />
+
+      <button className="carousel-btn carousel-btn-left" onClick={prev} aria-label="Previous">
+        &#8249;
+      </button>
+      <button className="carousel-btn carousel-btn-right" onClick={next} aria-label="Next">
+        &#8250;
+      </button>
+
+      <div className="carousel-dots">
+        {images.map((_, i) => (
+          <span
+            key={i}
+            className={`carousel-dot ${i === current ? 'active' : ''}`}
+            onClick={(e) => { e.stopPropagation(); setCurrent(i); }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -37,7 +121,7 @@ export default function Hero() {
           margin: 0 0 16px;
         }
         .hero-section h2 .passion { color: #2196f3; }
-        .hero-section h2 .sound { color: #1565c0; }
+        .hero-section h2 .sound  { color: #1565c0; }
         .hero-subtitle {
           font-size: 0.95rem;
           color: #666;
@@ -64,6 +148,8 @@ export default function Hero() {
           transform: translateY(-2px);
           box-shadow: 0 8px 28px rgba(33,150,243,0.45);
         }
+
+        /* Gallery wrapper */
         .hero-gallery-wrapper {
           width: 100%;
           max-width: 860px;
@@ -78,33 +164,6 @@ export default function Hero() {
           grid-template-columns: repeat(3, 1fr);
           gap: 12px;
         }
-        .hero-gallery-img {
-          width: 100%;
-          aspect-ratio: 4/3;
-          object-fit: cover;
-          border-radius: 12px;
-          background: linear-gradient(135deg, #bbdefb, #90caf9);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2.5rem;
-          overflow: hidden;
-          transition: transform 0.3s;
-        }
-        .hero-gallery-img:hover { transform: scale(1.03); }
-        .gallery-placeholder {
-          width: 100%;
-          aspect-ratio: 4/3;
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2.5rem;
-          background: linear-gradient(135deg, #bbdefb, #90caf9);
-          transition: transform 0.3s;
-          cursor: pointer;
-        }
-        .gallery-placeholder:hover { transform: scale(1.03); }
         .gallery-caption {
           text-align: center;
           margin-top: 14px;
@@ -113,14 +172,86 @@ export default function Hero() {
           font-size: 0.9rem;
         }
 
+        /* Mini carousel */
+        .mini-carousel {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4/3;
+          border-radius: 12px;
+          overflow: hidden;
+          background: linear-gradient(135deg, #bbdefb, #90caf9);
+        }
+        .mini-carousel-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          border-radius: 12px;
+          transition: opacity 0.3s ease;
+        }
+
+        /* Arrow buttons */
+        .carousel-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255,255,255,0.85);
+          border: none;
+          border-radius: 50%;
+          width: 28px;
+          height: 28px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #1565c0;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity 0.2s, background 0.2s;
+          z-index: 2;
+          line-height: 1;
+          padding: 0;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .mini-carousel:hover .carousel-btn { opacity: 1; }
+        .carousel-btn:hover { background: #fff; color: #2196f3; }
+        .carousel-btn-left  { left: 6px; }
+        .carousel-btn-right { right: 6px; }
+
+        /* Dot indicators */
+        .carousel-dots {
+          position: absolute;
+          bottom: 7px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 5px;
+          z-index: 2;
+        }
+        .carousel-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.55);
+          cursor: pointer;
+          transition: background 0.2s, transform 0.2s;
+        }
+        .carousel-dot.active {
+          background: #fff;
+          transform: scale(1.3);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
           .hero-gallery { grid-template-columns: 1fr 1fr; }
-          .hero-gallery .gallery-placeholder:last-child { grid-column: span 2; }
+          .hero-gallery .mini-carousel:last-child { grid-column: span 2; }
         }
         @media (max-width: 480px) {
           .hero-gallery { grid-template-columns: 1fr; }
-          .hero-gallery .gallery-placeholder:last-child { grid-column: span 1; }
+          .hero-gallery .mini-carousel:last-child { grid-column: span 1; }
           .hero-section { padding: 60px 16px 40px; }
+          .carousel-btn { opacity: 1; }
         }
       `}</style>
 
@@ -136,9 +267,9 @@ export default function Hero() {
 
         <div className="hero-gallery-wrapper">
           <div className="hero-gallery">
-            <div className="gallery-placeholder"><img src={hero1} alt="Gallery image" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px'}} /></div>
-            <div className="gallery-placeholder"><img src={hero2} alt="Gallery image" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px'}} /></div>
-            <div className="gallery-placeholder"><img src={hero3} alt="Gallery image" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px'}} /></div>
+            {galleryImages.map((images, i) => (
+              <MiniCarousel key={i} images={images} index={i} />
+            ))}
           </div>
           <p className="gallery-caption">Explore our facility</p>
         </div>
