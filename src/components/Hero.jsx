@@ -6,22 +6,22 @@
 import { useState } from 'react';
 import hero1 from '../assets/hero1.JPG';
 import hero2 from '../assets/hero2.JPG';
-import hero3 from '../assets/hero3.JPG';
-import hero4 from '../assets/hero4.JPG';
-import hero5 from '../assets/hero5.JPG';
+import hero3 from '../assets/hero3.jpg';
+import hero4 from '../assets/hero4.jpg';
+import hero5 from '../assets/hero5.jpg';
 import hero6 from '../assets/hero6.JPG';
 import hero7 from '../assets/hero7.JPG';
-import hero8 from '../assets/hero8.JPG';
+import hero8 from '../assets/hero8.jpg';
 import hero9 from '../assets/hero9.JPG';
 import hero10 from '../assets/hero10.JPG';
 import hero11 from '../assets/hero11.JPG';
 import hero12 from '../assets/hero12.JPG';
 import hero13 from '../assets/hero13.JPG';
 import hero14 from '../assets/hero14.JPG';
-import hero15 from '../assets/hero15.JPG';
-import hero16 from '../assets/hero16.JPG';
-import hero17 from '../assets/hero17.JPG';
-import hero18 from '../assets/hero18.JPG';
+import hero15 from '../assets/hero15.jpg';
+import hero16 from '../assets/hero16.jpg';
+import hero17 from '../assets/hero17.jpg';
+import hero18 from '../assets/hero18.jpg';
 
 // 4 images per carousel slot — replace these arrays with your actual imports or URLs
 const galleryImages = [
