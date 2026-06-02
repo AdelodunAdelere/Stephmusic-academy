@@ -1,234 +1,245 @@
-import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import aboutImg from '../assets/about.JPG';
 
-const TYPED_TEXT = [
-  "🎵 Founded in Lagos with passion.",
-  "🎸 6 instruments, all skill levels.",
-  "🎤 Learn from expert instructors.",
-  "🏆 Shaping Nigeria's next musicians.",
+const HIGHLIGHTS = [
+  { icon: '🏆', text: 'Founded in Lagos with a mission to shape Nigeria\'s next generation of musicians.' },
+  { icon: '🎵', text: '6 disciplines taught by world-class instructors — from piano to music production.' },
+  { icon: '🌍', text: 'Students from across Nigeria and the diaspora call Stephmusic home.' },
+  { icon: '🎓', text: 'Personalised curriculums — every student gets a path designed for them.' },
 ];
 
-function Typewriter() {
-  const [lines, setLines] = useState([]);
-  const [lineIdx, setLineIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const ref = useRef(null);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setStarted(true); },
-      { threshold: 0.4 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started || lineIdx >= TYPED_TEXT.length) return;
-    const current = TYPED_TEXT[lineIdx];
-    if (charIdx < current.length) {
-      const t = setTimeout(() => setCharIdx(c => c + 1), 40);
-      return () => clearTimeout(t);
-    } else {
-      const t = setTimeout(() => {
-        setLines(prev => [...prev, current]);
-        setLineIdx(i => i + 1);
-        setCharIdx(0);
-      }, 300);
-      return () => clearTimeout(t);
-    }
-  }, [started, lineIdx, charIdx]);
-
-  const currentTyping = lineIdx < TYPED_TEXT.length
-    ? TYPED_TEXT[lineIdx].slice(0, charIdx)
-    : null;
-
-  return (
-    <div ref={ref} className="typewriter-block">
-      {lines.map((line, i) => <p key={i} className="typed-line done">{line}</p>)}
-      {currentTyping !== null && (
-        <p className="typed-line typing">{currentTyping}<span className="cursor">|</span></p>
-      )}
-    </div>
-  );
-}
+const MILESTONES = [
+  { year: '2018', event: 'Academy Founded' },
+  { year: '2020', event: 'Online Programs Launched' },
+  { year: '2023', event: '500+ Students Milestone' },
+  { year: '2025', event: 'New Campus Studio' },
+];
 
 export default function About() {
   return (
     <>
       <style>{`
         .about-section {
-          padding: 80px 40px;
-          background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
-          font-family: 'Poppins', sans-serif;
-        }
-        .about-section h2 {
-          text-align: center;
-          font-size: clamp(1.6rem, 4vw, 2.2rem);
-          font-weight: 800;
-          color: #fff;
-          margin: 0 0 52px;
+          padding: 100px 24px;
+          background: #F8FAFC;
+          font-family: 'Inter', sans-serif;
         }
         .about-inner {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 60px;
-          max-width: 1000px;
-          margin: 0 auto;
-          align-items: center;
+          max-width: 1100px; margin: 0 auto;
+          display: grid; grid-template-columns: 1fr 1fr;
+          gap: 80px; align-items: center;
         }
-        .about-text h3 {
-          font-size: clamp(1.2rem, 3vw, 1.6rem);
-          font-weight: 700;
-          color: #fff;
-          margin: 0 0 20px;
-          line-height: 1.3;
+
+        /* Text side */
+        .about-text h2 {
+          font-size: clamp(2rem, 4vw, 2.8rem);
+          font-weight: 800; letter-spacing: -0.025em; line-height: 1.15;
+          color: #0F172A; margin: 16px 0 22px;
         }
-        .about-text h3 span {
-          text-decoration: underline;
-          text-decoration-color: rgba(255,255,255,0.5);
-        }
+        .about-text h2 em { font-style: normal; color: #2563EB; }
         .about-text p {
-          color: rgba(255,255,255,0.85);
-          font-size: 0.92rem;
-          line-height: 1.75;
-          margin: 0 0 32px;
+          font-size: 1rem; color: #64748B; line-height: 1.78;
+          margin-bottom: 32px;
         }
-        .about-contact-btn {
-          display: inline-block;
-          background: #fff;
-          color: #2196f3;
-          text-decoration: none;
-          padding: 12px 30px;
-          border-radius: 28px;
-          font-weight: 700;
-          font-size: 0.92rem;
-          transition: all 0.25s;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        .about-highlights {
+          display: flex; flex-direction: column; gap: 14px;
+          margin-bottom: 36px;
         }
-        .about-contact-btn:hover {
-          background: #e3f2fd;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        .highlight-row {
+          display: flex; align-items: flex-start; gap: 12px;
         }
-        .about-card {
-          background: #fff;
-          border-radius: 20px;
-          padding: 32px;
-          box-shadow: 0 16px 48px rgba(0,0,0,0.18);
-          position: relative;
-        }
-        .about-card .card-header {
-          font-size: 0.7rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 1.5px;
-          color: #2196f3;
-          margin-bottom: 16px;
-        }
-        .about-card .card-title {
-          font-size: 1rem;
-          font-weight: 700;
-          color: #1a1a2e;
-          margin-bottom: 12px;
-        }
-
-        /* Typewriter */
-        .typewriter-block {
-          margin-bottom: 20px;
-          min-height: 88px;
-        }
-        .typed-line {
-          font-size: 0.88rem;
-          color: #444;
-          line-height: 1.7;
-          margin: 0 0 4px;
-        }
-        .typed-line.done { color: #333; }
-        .typed-line.typing { color: #2196f3; }
-        .cursor {
-          display: inline-block;
-          animation: blink 0.7s step-start infinite;
-          font-weight: 300;
-          color: #2196f3;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .about-card-img {
-          width: 100%;
-          height: 300px;
-          background: linear-gradient(135deg, #bbdefb, #90caf9);
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2.5rem;
-          margin-bottom: 16px;
-        }
-        .about-card-footer {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-        .avatar {
-          width: 40px; height: 40px;
-          background: linear-gradient(135deg, #2196f3, #1565c0);
-          border-radius: 50%;
+        .highlight-icon {
+          width: 34px; height: 34px; border-radius: 9px;
+          background: #EFF6FF;
           display: flex; align-items: center; justify-content: center;
-          color: #fff; font-size: 1rem; font-weight: 700;
+          font-size: 0.95rem; flex-shrink: 0;
         }
-        .about-card-footer span {
-          font-weight: 700;
-          color: #1a1a2e;
-          font-size: 0.92rem;
+        .highlight-text {
+          font-size: 0.88rem; color: #475569; line-height: 1.6;
+          padding-top: 6px;
         }
-        .about-card-footer small {
-          color: #888;
-          font-size: 0.78rem;
-          display: block;
+        .about-cta-row {
+          display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
         }
-        @media (max-width: 768px) {
-          .about-section { padding: 60px 20px; }
-          .about-inner { grid-template-columns: 1fr; gap: 36px; }
-          .about-text h3 { text-align: center; }
-          .about-contact-btn-container { display: flex; justify-content: center; }
+
+        /* Visual side */
+        .about-visual { position: relative; }
+        .about-img-wrap {
+          position: relative; border-radius: 24px; overflow: hidden;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 32px 80px rgba(0,0,0,0.1);
+          aspect-ratio: 4/5;
+        }
+        .about-img-wrap img {
+          width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .about-img-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(3,10,24,0.5) 0%, transparent 60%);
+        }
+
+        /* Floating founder card */
+        .founder-card {
+          position: absolute; bottom: 28px; left: -32px;
+          background: rgba(255,255,255,0.96);
+          backdrop-filter: blur(16px);
+          border: 1px solid rgba(255,255,255,0.9);
+          border-radius: 16px;
+          padding: 16px 20px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+          display: flex; align-items: center; gap: 12px;
+          min-width: 220px;
+        }
+        .founder-avatar {
+          width: 44px; height: 44px; border-radius: 12px;
+          background: linear-gradient(135deg, #2563EB, #818CF8);
+          display: flex; align-items: center; justify-content: center;
+          color: #fff; font-weight: 800; font-size: 1rem;
+          flex-shrink: 0;
+        }
+        .founder-name { font-weight: 700; font-size: 0.88rem; color: #0F172A; }
+        .founder-role { font-size: 0.74rem; color: #64748B; margin-top: 1px; }
+
+        /* Stats badge floating top-right */
+        .about-badge {
+          position: absolute; top: -20px; right: -20px;
+          background: #2563EB;
+          border-radius: 16px;
+          padding: 18px 20px;
+          color: #fff;
+          box-shadow: 0 8px 32px rgba(37,99,235,0.45);
+          text-align: center;
+        }
+        .about-badge-num {
+          font-size: 1.8rem; font-weight: 800; line-height: 1; display: block;
+        }
+        .about-badge-text {
+          font-size: 0.72rem; font-weight: 600; opacity: 0.8;
+          display: block; margin-top: 2px; white-space: nowrap;
+        }
+
+        /* Timeline */
+        .about-timeline {
+          margin-top: 40px; padding: 24px;
+          background: #fff; border-radius: 16px;
+          border: 1px solid rgba(15,23,42,0.06);
+        }
+        .timeline-title {
+          font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+          letter-spacing: 0.1em; color: #94A3B8; margin-bottom: 16px;
+        }
+        .timeline-rows {
+          display: flex; flex-direction: column; gap: 12px;
+        }
+        .timeline-row {
+          display: flex; align-items: center; gap: 12px;
+        }
+        .timeline-year {
+          font-size: 0.78rem; font-weight: 700; color: #2563EB;
+          width: 36px; flex-shrink: 0;
+        }
+        .timeline-dot {
+          width: 8px; height: 8px; border-radius: 50%;
+          background: #2563EB; flex-shrink: 0;
+        }
+        .timeline-event {
+          font-size: 0.82rem; color: #475569; font-weight: 500;
+        }
+
+        @media (max-width: 900px) {
+          .about-inner { grid-template-columns: 1fr; gap: 48px; }
+          .about-visual { order: -1; }
+          .founder-card { left: 16px; bottom: 20px; }
+          .about-badge { top: 16px; right: 16px; }
         }
         @media (max-width: 480px) {
-          .about-section { padding: 48px 16px; }
+          .about-section { padding: 72px 16px; }
+          .founder-card { left: 12px; min-width: unset; }
         }
       `}</style>
 
       <section id="about" className="about-section">
-        <h2>About Us</h2>
         <div className="about-inner">
-          <div className="about-text">
-            <h3>Best in Our <span>Service</span> Delivery</h3>
+          {/* Text column */}
+          <motion.div
+            className="about-text"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="section-label">Our Story</span>
+            <h2>Built on <em>passion</em>,<br />driven by music.</h2>
             <p>
-              Steph Music Academy was founded by Stephen Aramawo with a single dream — to make world-class music education accessible to every passionate soul in Nigeria and beyond. What began as private lessons in a small Lagos studio has grown into a thriving community of musicians, performers, and creators who share one language: music. We believe learning music should feel like a journey, not a chore. Our instructors blend traditional technique with modern creativity, giving each student a personalised path. At Steph Music Academy, our mission is simple: unlock the musician in you. We are committed to nurturing talent at every level, celebrating every milestone no matter how small, and building a supportive community where students grow not just as musicians, but as artists with a voice. Your sound matters and we are here to help you share it with the world.
+              Steph Music Academy was founded by Stephen Aramawo with one dream — to make world-class
+              music education accessible to every passionate soul in Nigeria and beyond. What began as
+              private lessons in a small Lagos studio has grown into a thriving community of musicians,
+              performers, and creators united by one language: music.
             </p>
-            <div className="about-contact-btn-container">
-              <a href="#contact" className="about-contact-btn">Contact Us</a>
+
+            <div className="about-highlights">
+              {HIGHLIGHTS.map((h, i) => (
+                <motion.div
+                  key={i}
+                  className="highlight-row"
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
+                >
+                  <div className="highlight-icon">{h.icon}</div>
+                  <p className="highlight-text">{h.text}</p>
+                </motion.div>
+              ))}
             </div>
-          </div>
 
-          <div className="about-card">
-            <div className="card-header">About our Company</div>
-
-            <Typewriter />
-
-            <div className="card-title">Welcome to Our Music School and Online Course</div>
-            <div className="about-card-img">
-              <img src={aboutImg} alt="About image" style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'12px'}} />
+            <div className="about-cta-row">
+              <a href="#contact" className="btn btn-primary">Get In Touch</a>
+              <a href="#register" className="btn btn-secondary">Join the Academy</a>
             </div>
-            <div className="about-card-footer">
-              <div className="avatar">SA</div>
-              <div>
-                <span>Stephen Aramawo</span>
-                <small>Founder & Lead Instructor</small>
+
+            {/* Mini timeline */}
+            <div className="about-timeline" style={{ marginTop: 36 }}>
+              <div className="timeline-title">Our Journey</div>
+              <div className="timeline-rows">
+                {MILESTONES.map((m, i) => (
+                  <div className="timeline-row" key={i}>
+                    <span className="timeline-year">{m.year}</span>
+                    <div className="timeline-dot" />
+                    <span className="timeline-event">{m.event}</span>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          </motion.div>
+
+          {/* Visual column */}
+          <motion.div
+            className="about-visual"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="about-img-wrap">
+              <img src={aboutImg} alt="Stephmusic Academy studio" />
+              <div className="about-img-overlay" />
+            </div>
+
+            {/* Floating founder card */}
+            <div className="founder-card">
+              <div className="founder-avatar">SA</div>
+              <div>
+                <div className="founder-name">Stephen Aramawo</div>
+                <div className="founder-role">Founder & Lead Instructor</div>
+              </div>
+            </div>
+
+            {/* Stats badge */}
+            <div className="about-badge">
+              <span className="about-badge-num">500+</span>
+              <span className="about-badge-text">Students</span>
+            </div>
+          </motion.div>
         </div>
       </section>
     </>

@@ -1,88 +1,201 @@
-// ============================================================
-// COMPONENT: Footer.jsx
-// COPY THIS FILE → src/components/Footer.jsx
-// ============================================================
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
+
+const QUICK_LINKS = [
+  { label: 'Home',         href: '#home' },
+  { label: 'About Us',     href: '#about' },
+  { label: 'Testimonials', href: '#testimonials' },
+  { label: 'FAQ',          href: '#faq' },
+  { label: 'Contact',      href: '#contact' },
+  { label: 'Register',     href: '#register' },
+];
+
+const SERVICES_LINKS = [
+  { label: 'All Courses',       to: '/courses' },
+  { label: 'Pricing Plans',     to: '/pricing' },
+  { label: 'Meet Our Tutors',   to: '/tutors' },
+  { label: 'Piano Lessons',     to: '/courses' },
+  { label: 'Guitar Classes',    to: '/courses' },
+  { label: 'Music Production',  to: '/courses' },
+];
+
+const SOCIAL_LINKS = [
+  { label: 'Instagram', href: 'https://www.instagram.com/stephmusicng', icon: '📸' },
+  { label: 'YouTube',   href: 'https://www.youtube.com/@ferefolu',      icon: '▶️' },
+  { label: 'Facebook',  href: '#',                                        icon: '📘' },
+  { label: 'Twitter/X', href: '#',                                        icon: '🐦' },
+];
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <>
       <style>{`
         .footer {
-          background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #2196f3 100%);
+          background: #030712;
           color: #fff;
-          padding: 56px 40px 24px;
-          font-family: 'Poppins', sans-serif;
+          font-family: 'Inter', sans-serif;
+          padding: 72px 24px 0;
+          border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .footer-inner {
+          max-width: 1200px; margin: 0 auto;
         }
         .footer-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 40px;
-          max-width: 1000px;
-          margin: 0 auto 40px;
-          justify-items: center;
-          
+          grid-template-columns: 1.4fr 1fr 1fr 1fr;
+          gap: 48px;
+          padding-bottom: 56px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
-        .footer-col h4 {
-          font-size: 0.9rem;
-          font-weight: 700;
-          margin: 0 0 16px;
-          color: rgba(255,255,255,0.95);
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          font-size: 0.78rem;
+        /* Brand column */
+        .footer-brand {}
+        .footer-logo { height: 140px; width: auto; object-fit: contain; margin-bottom: 16px; }
+        .footer-tagline {
+          font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.7;
+          max-width: 260px; margin-bottom: 24px;
         }
-        .footer-col p, .footer-col a {
-          font-size: 0.84rem;
-          color: rgba(255,255,255,0.75);
-          line-height: 1.6;
+        .footer-social { display: flex; gap: 8px; flex-wrap: wrap; }
+        .footer-social-btn {
+          display: inline-flex; align-items: center; gap: 6px;
+          padding: 8px 14px; border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.04);
+          color: rgba(255,255,255,0.6);
+          font-size: 0.78rem; font-weight: 600;
           text-decoration: none;
-          display: block;
-          margin-bottom: 8px;
-          transition: color 0.2s;
+          transition: all 0.18s;
+          font-family: 'Inter', sans-serif;
         }
-        .footer-col a:hover { color: #fff; }
-        .footer-bottom {
-          border-top: 1px solid rgba(255,255,255,0.15);
-          padding-top: 20px;
-          text-align: center;
-          font-size: 0.8rem;
-          color: rgba(255,255,255,0.55);
+        .footer-social-btn:hover {
+          background: rgba(255,255,255,0.08);
+          color: #fff;
+          border-color: rgba(255,255,255,0.15);
         }
 
-        @media (max-width: 768px) {
-          .footer { padding: 48px 20px 20px; }
-          .footer-grid { grid-template-columns: 1fr 1fr; }
-          .footer-gird { padding-left: 40px; }
+        /* Link columns */
+        .footer-col-title {
+          font-size: 0.75rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.1em;
+          color: rgba(255,255,255,0.4);
+          margin-bottom: 20px;
         }
-        @media (max-width: 480px) {
-          .footer { padding: 36px 16px 16px; }
-          .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
-          
+        .footer-links { display: flex; flex-direction: column; gap: 10px; }
+        .footer-link {
+          font-size: 0.875rem; color: rgba(255,255,255,0.55);
+          text-decoration: none; transition: color 0.18s;
+          font-family: 'Inter', sans-serif;
+        }
+        .footer-link:hover { color: #fff; }
+
+        /* Contact blurbs */
+        .footer-contact-item {
+          display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px;
+        }
+        .footer-contact-icon { font-size: 0.9rem; margin-top: 1px; }
+        .footer-contact-text { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+        /* Bottom bar */
+        .footer-bottom {
+          padding: 20px 0;
+          display: flex; align-items: center; justify-content: space-between;
+          gap: 12px; flex-wrap: wrap;
+        }
+        .footer-copy {
+          font-size: 0.8rem; color: rgba(255,255,255,0.3);
+        }
+        .footer-bottom-links { display: flex; gap: 20px; }
+        .footer-bottom-link {
+          font-size: 0.78rem; color: rgba(255,255,255,0.3);
+          text-decoration: none; transition: color 0.18s;
+        }
+        .footer-bottom-link:hover { color: rgba(255,255,255,0.65); }
+
+        @media (max-width: 900px) {
+          .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+        }
+        @media (max-width: 560px) {
+          .footer { padding: 56px 16px 0; }
+          .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+          .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
         }
       `}</style>
 
       <footer className="footer">
-        <div className="footer-grid">
-          <div className="footer-col">
-            <h4>Our Social Media</h4>
-            <a href="https://www.instagram.com/stephmusicng">Instagram</a>
-            <a href="#">Facebook</a>
-            <a href="#">Twitter / X</a>
-            <a href="https://www.youtube.com/@ferefolu">YouTube</a>
+        <div className="footer-inner">
+          <div className="footer-grid">
+            {/* Brand */}
+            <div className="footer-brand">
+              <Link to="/">
+                <img src={logo} alt="Stephmusic Academy" className="footer-logo" />
+              </Link>
+              <p className="footer-tagline">
+                Nigeria's premier music academy — where passion meets world-class training.
+                Lagos-based, globally inspired.
+              </p>
+              <div className="footer-social">
+                {SOCIAL_LINKS.map(s => (
+                  <a key={s.label} href={s.href} className="footer-social-btn" target="_blank" rel="noopener noreferrer">
+                    {s.icon} {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <div className="footer-col-title">Quick Links</div>
+              <div className="footer-links">
+                {QUICK_LINKS.map(l => (
+                  <a key={l.label} href={l.href} className="footer-link">{l.label}</a>
+                ))}
+              </div>
+            </div>
+
+            {/* Services */}
+            <div>
+              <div className="footer-col-title">Services</div>
+              <div className="footer-links">
+                {SERVICES_LINKS.map(l => (
+                  <Link key={l.label} to={l.to} className="footer-link">{l.label}</Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <div className="footer-col-title">Get In Touch</div>
+              <div className="footer-contact-item">
+                <span className="footer-contact-icon">📞</span>
+                <div className="footer-contact-text">+234 807 080 3041<br />+234 816 980 3046</div>
+              </div>
+              <div className="footer-contact-item">
+                <span className="footer-contact-icon">✉️</span>
+                <div className="footer-contact-text">info@stephmusicacademy.com</div>
+              </div>
+              <div className="footer-contact-item">
+                <span className="footer-contact-icon">📍</span>
+                <div className="footer-contact-text">Lagos, Nigeria</div>
+              </div>
+              <div className="footer-contact-item">
+                <span className="footer-contact-icon">🕐</span>
+                <div className="footer-contact-text">Mon – Sat, 9am – 6pm WAT</div>
+              </div>
+            </div>
           </div>
 
-          <div className="footer-col">
-            <h4>Useful Links</h4>
-            <a href="#about">About Us</a>
-            <a href="#services">Services</a>
-            <a href="#register">Register</a>
-            <a href="#contact">Contact</a>
+          {/* Bottom bar */}
+          <div className="footer-bottom">
+            <span className="footer-copy">
+              © {year} Stephmusic Academy. All rights reserved.
+            </span>
+            <div className="footer-bottom-links">
+              <a href="#" className="footer-bottom-link">Privacy Policy</a>
+              <a href="#" className="footer-bottom-link">Terms of Service</a>
+            </div>
           </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p>Copyrights Reserved {new Date().getFullYear()} — Stephmusic Academy</p>
         </div>
       </footer>
     </>

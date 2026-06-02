@@ -1,277 +1,232 @@
-// ============================================================
-// COMPONENT: Hero.jsx
-// COPY THIS FILE → src/components/Hero.jsx
-// ============================================================
+import { motion } from 'framer-motion';
 
-import { useState } from 'react';
-import hero1 from '../assets/hero1.JPG';
-import hero2 from '../assets/hero2.JPG';
-import hero3 from '../assets/hero3.jpg';
-import hero4 from '../assets/hero4.jpg';
-import hero5 from '../assets/hero5.jpg';
-import hero6 from '../assets/hero6.JPG';
-import hero7 from '../assets/hero7.JPG';
-import hero8 from '../assets/hero8.jpg';
-import hero9 from '../assets/hero9.JPG';
-import hero10 from '../assets/hero10.JPG';
-import hero11 from '../assets/hero11.JPG';
-import hero12 from '../assets/hero12.JPG';
-import hero13 from '../assets/hero13.JPG';
-import hero14 from '../assets/hero14.JPG';
-import hero15 from '../assets/hero15.jpg';
-import hero16 from '../assets/hero16.jpg';
-import hero17 from '../assets/hero17.jpg';
-import hero18 from '../assets/hero18.jpg';
-
-// 4 images per carousel slot — replace these arrays with your actual imports or URLs
-const galleryImages = [
-  [
-    hero1,
-    hero2,
-    hero3,
-    hero4, 
-    hero5, 
-  ],
-  [
-    hero6,
-    hero7,
-    hero8,
-    hero9,
-    hero10,
-    hero11,
-  ],
-  [
-    hero12,
-    hero13,
-    hero14,
-    hero15,
-    hero16,
-    hero17,
-    hero18,
-  ],
+const STATS = [
+  { value: '500+',  label: 'Students Trained' },
+  { value: '6',     label: 'Instruments' },
+  { value: '10+',   label: 'Expert Tutors' },
+  { value: '5★',    label: 'Avg. Rating' },
 ];
 
-function MiniCarousel({ images, index }) {
-  const [current, setCurrent] = useState(0);
-
-  const prev = (e) => {
-    e.stopPropagation();
-    setCurrent((c) => (c - 1 + images.length) % images.length);
-  };
-  const next = (e) => {
-    e.stopPropagation();
-    setCurrent((c) => (c + 1) % images.length);
-  };
-
-  return (
-    <div className="mini-carousel">
-      <img
-        src={images[current]}
-        alt={`Gallery ${index + 1} slide ${current + 1}`}
-        className="mini-carousel-img"
-      />
-
-      <button className="carousel-btn carousel-btn-left" onClick={prev} aria-label="Previous">
-        &#8249;
-      </button>
-      <button className="carousel-btn carousel-btn-right" onClick={next} aria-label="Next">
-        &#8250;
-      </button>
-
-      <div className="carousel-dots">
-        {images.map((_, i) => (
-          <span
-            key={i}
-            className={`carousel-dot ${i === current ? 'active' : ''}`}
-            onClick={(e) => { e.stopPropagation(); setCurrent(i); }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
+const fadeUp = (delay = 0) => ({
+  initial:  { opacity: 0, y: 28 },
+  animate:  { opacity: 1, y: 0 },
+  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay },
+});
 
 export default function Hero() {
   return (
     <>
       <style>{`
-        .hero-section {
-          min-height: 90vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          padding: 80px 24px 60px;
-          background: #fff;
-          font-family: 'Poppins', sans-serif;
-        }
-        .hero-section h1 {
-          font-size: clamp(2rem, 5vw, 3.2rem);
-          font-weight: 800;
-          color: #1a1a2e;
-          margin: 0 0 12px;
-          line-height: 1.2;
-        }
-        .hero-section h1 .blue { color: #2196f3; }
-        .hero-section h2 {
-          font-size: clamp(1.1rem, 3vw, 1.5rem);
-          font-weight: 600;
-          color: #1a1a2e;
-          margin: 0 0 16px;
-        }
-        .hero-section h2 .passion { color: #2196f3; }
-        .hero-section h2 .sound  { color: #1565c0; }
-        .hero-subtitle {
-          font-size: 0.95rem;
-          color: #666;
-          max-width: 440px;
-          line-height: 1.7;
-          margin: 0 auto 28px;
-        }
-        .hero-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          background: #2196f3;
-          color: #fff;
-          text-decoration: none;
-          padding: 13px 32px;
-          border-radius: 32px;
-          font-weight: 600;
-          font-size: 0.95rem;
-          transition: all 0.25s;
-          box-shadow: 0 4px 20px rgba(33,150,243,0.35);
-        }
-        .hero-btn:hover {
-          background: #1565c0;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 28px rgba(33,150,243,0.45);
-        }
-
-        /* Gallery wrapper */
-        .hero-gallery-wrapper {
-          width: 100%;
-          max-width: 860px;
-          margin: 60px auto 0;
-          border: 2px solid #2196f3;
-          border-radius: 16px;
-          padding: 20px;
-          background: linear-gradient(135deg, #e3f2fd 0%, #f8fbff 100%);
-        }
-        .hero-gallery {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 12px;
-        }
-        .gallery-caption {
-          text-align: center;
-          margin-top: 14px;
-          font-style: italic;
-          color: #555;
-          font-size: 0.9rem;
-        }
-
-        /* Mini carousel */
-        .mini-carousel {
+        .hero {
           position: relative;
-          width: 100%;
-          aspect-ratio: 4/3;
-          border-radius: 12px;
+          min-height: 100svh;
+          background: #030A18;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          text-align: center;
+          padding: 130px 24px 80px;
           overflow: hidden;
-          background: linear-gradient(135deg, #bbdefb, #90caf9);
-        }
-        .mini-carousel-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          border-radius: 12px;
-          transition: opacity 0.3s ease;
+          font-family: 'Inter', sans-serif;
         }
 
-        /* Arrow buttons */
-        .carousel-btn {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(255,255,255,0.85);
-          border: none;
-          border-radius: 50%;
-          width: 28px;
-          height: 28px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1.2rem;
-          font-weight: 700;
-          color: #1565c0;
-          cursor: pointer;
-          opacity: 0;
-          transition: opacity 0.2s, background 0.2s;
-          z-index: 2;
-          line-height: 1;
-          padding: 0;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        /* Gradient blobs */
+        .hero-orb-1 {
+          position: absolute; width: 700px; height: 700px;
+          top: -200px; left: -180px;
+          background: radial-gradient(circle, rgba(37,99,235,0.28) 0%, transparent 70%);
+          pointer-events: none;
         }
-        .mini-carousel:hover .carousel-btn { opacity: 1; }
-        .carousel-btn:hover { background: #fff; color: #2196f3; }
-        .carousel-btn-left  { left: 6px; }
-        .carousel-btn-right { right: 6px; }
-
-        /* Dot indicators */
-        .carousel-dots {
-          position: absolute;
-          bottom: 7px;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          gap: 5px;
-          z-index: 2;
+        .hero-orb-2 {
+          position: absolute; width: 600px; height: 600px;
+          bottom: -150px; right: -150px;
+          background: radial-gradient(circle, rgba(99,102,241,0.22) 0%, transparent 70%);
+          pointer-events: none;
         }
-        .carousel-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.55);
-          cursor: pointer;
-          transition: background 0.2s, transform 0.2s;
-        }
-        .carousel-dot.active {
-          background: #fff;
-          transform: scale(1.3);
+        .hero-orb-3 {
+          position: absolute; width: 400px; height: 400px;
+          top: 40%; left: 40%;
+          background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+          pointer-events: none;
+          animation: float 8s ease-in-out infinite;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-          .hero-gallery { grid-template-columns: 1fr 1fr; }
-          .hero-gallery .mini-carousel:last-child { grid-column: span 2; }
+        /* Noise grain overlay */
+        .hero-grain {
+          position: absolute; inset: 0; z-index: 1;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+          pointer-events: none;
         }
-        @media (max-width: 480px) {
-          .hero-gallery { grid-template-columns: 1fr; }
-          .hero-gallery .mini-carousel:last-child { grid-column: span 1; }
-          .hero-section { padding: 60px 16px 40px; }
-          .carousel-btn { opacity: 1; }
+
+        .hero-content { position: relative; z-index: 2; max-width: 860px; }
+
+        .hero-badge {
+          display: inline-flex; align-items: center; gap: 8px;
+          padding: 6px 16px; border-radius: 100px;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.12);
+          font-size: 0.78rem; font-weight: 600;
+          color: rgba(255,255,255,0.75);
+          letter-spacing: 0.02em;
+          margin-bottom: 32px;
+        }
+        .hero-badge-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #4ADE80;
+          animation: pulse-dot 2s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+
+        .hero-h1 {
+          font-size: clamp(2.8rem, 7vw, 5.6rem);
+          font-weight: 800;
+          line-height: 1.05;
+          letter-spacing: -0.035em;
+          color: #fff;
+          margin-bottom: 24px;
+        }
+        .hero-h1 .gradient-span {
+          background: linear-gradient(135deg, #60A5FA 0%, #818CF8 60%, #A78BFA 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .hero-sub {
+          font-size: clamp(1rem, 2.5vw, 1.2rem);
+          color: rgba(255,255,255,0.55);
+          line-height: 1.75;
+          max-width: 540px;
+          margin: 0 auto 40px;
+        }
+
+        .hero-btns {
+          display: flex; align-items: center; justify-content: center;
+          gap: 14px; flex-wrap: wrap;
+          margin-bottom: 64px;
+        }
+
+        /* Stats pill row */
+        .hero-stats {
+          display: flex; align-items: center; justify-content: center;
+          gap: 0; flex-wrap: wrap;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+          padding: 20px 32px;
+          max-width: 660px;
+          margin: 0 auto;
+        }
+        .hero-stat {
+          display: flex; flex-direction: column; align-items: center;
+          padding: 0 28px;
+          border-right: 1px solid rgba(255,255,255,0.08);
+        }
+        .hero-stat:last-child { border-right: none; }
+        .hero-stat-value {
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          font-weight: 800;
+          background: linear-gradient(135deg, #60A5FA, #818CF8);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          line-height: 1.1;
+          margin-bottom: 4px;
+        }
+        .hero-stat-label {
+          font-size: 0.74rem;
+          color: rgba(255,255,255,0.45);
+          font-weight: 500;
+          white-space: nowrap;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+          position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+          display: flex; flex-direction: column; align-items: center;
+          gap: 6px; z-index: 2;
+        }
+        .scroll-dot {
+          width: 1.5px; height: 36px;
+          background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+          border-radius: 1px;
+          animation: scroll-fade 2s ease-in-out infinite;
+        }
+        @keyframes scroll-fade {
+          0%,100% { opacity: 0.3; transform: scaleY(0.8); }
+          50%      { opacity: 0.8; transform: scaleY(1); }
+        }
+
+        @media (max-width: 600px) {
+          .hero { padding: 110px 20px 72px; }
+          .hero-stats { padding: 16px 20px; gap: 0; }
+          .hero-stat { padding: 0 16px; }
+          .hero-stat-value { font-size: 1.4rem; }
+        }
+        @media (max-width: 440px) {
+          .hero-stats { flex-direction: column; gap: 16px; }
+          .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; width: 100%; }
+          .hero-stat:last-child { border-bottom: none; padding-bottom: 0; }
         }
       `}</style>
 
-      <section id="home" className="hero-section">
-        <h1>Welcome to <span className="blue">Stephmusic</span> Academy</h1>
-        <h2>Where <span className="passion">Passion</span> Meets <span className="sound">Sound</span></h2>
-        <p className="hero-subtitle">
-          Unlock Your Musical Potential and Turn Your Passion Into Performance.
-        </p>
-        <a href="#services" className="hero-btn">
-          Learn more →
-        </a>
+      <section id="home" className="hero">
+        {/* Background orbs */}
+        <div className="hero-orb-1" />
+        <div className="hero-orb-2" />
+        <div className="hero-orb-3" />
+        <div className="hero-grain" />
 
-        <div className="hero-gallery-wrapper">
-          <div className="hero-gallery">
-            {galleryImages.map((images, i) => (
-              <MiniCarousel key={i} images={images} index={i} />
-            ))}
-          </div>
-          <p className="gallery-caption">Explore our facility</p>
+        <div className="hero-content">
+          {/* Badge */}
+          <motion.div {...fadeUp(0.1)}>
+            <div className="hero-badge">
+              <span className="hero-badge-dot" />
+              Now Enrolling — 2025 / 2026 Session
+            </div>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1 className="hero-h1" {...fadeUp(0.22)}>
+            Where <span className="gradient-span">Passion</span>
+            <br />Meets Sound
+          </motion.h1>
+
+          {/* Sub */}
+          <motion.p className="hero-sub" {...fadeUp(0.34)}>
+            Unlock your musical potential with world-class training at Stephmusic Academy —
+            Nigeria's premier destination for music education in Lagos.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div className="hero-btns" {...fadeUp(0.44)}>
+            <a href="#register" className="btn btn-primary btn-lg">
+              Start Your Journey →
+            </a>
+            <a href="#services" className="btn btn-ghost-white btn-lg">
+              Explore Courses
+            </a>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.56, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="hero-stats">
+              {STATS.map((s) => (
+                <div className="hero-stat" key={s.label}>
+                  <span className="hero-stat-value">{s.value}</span>
+                  <span className="hero-stat-label">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="scroll-indicator">
+          <div className="scroll-dot" />
         </div>
       </section>
     </>
