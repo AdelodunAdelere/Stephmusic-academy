@@ -2,10 +2,10 @@ import { motion } from 'framer-motion';
 import aboutImg from '../assets/about.JPG';
 
 const HIGHLIGHTS = [
-  { icon: '🏆', text: 'Founded in Lagos with a mission to shape Nigeria\'s next generation of musicians.' },
-  { icon: '🎵', text: '6 disciplines taught by world-class instructors — from piano to music production.' },
-  { icon: '🌍', text: 'Students from across Nigeria and the diaspora call Stephmusic home.' },
-  { icon: '🎓', text: 'Personalised curriculums — every student gets a path designed for them.' },
+  { text: 'Founded in Lagos with a mission to shape Nigeria\'s next generation of musicians.' },
+  { text: '6 disciplines taught by world-class instructors — from piano to music production.' },
+  { text: 'Students from across Nigeria and the diaspora call Stephmusic home.' },
+  { text: 'Personalised curriculums — every student gets a path designed for them.' },
 ];
 
 const MILESTONES = [
@@ -48,15 +48,16 @@ export default function About() {
         .highlight-row {
           display: flex; align-items: flex-start; gap: 12px;
         }
-        .highlight-icon {
-          width: 34px; height: 34px; border-radius: 9px;
-          background: #EFF6FF;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 0.95rem; flex-shrink: 0;
-        }
         .highlight-text {
           font-size: 0.88rem; color: #475569; line-height: 1.6;
-          padding-top: 6px;
+        }
+        .highlight-text::before {
+          content: '';
+          display: inline-block;
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #2563EB;
+          margin-right: 10px;
+          vertical-align: middle;
         }
         .about-cta-row {
           display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
@@ -186,7 +187,6 @@ export default function About() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.08, ease: 'easeOut' }}
                 >
-                  <div className="highlight-icon">{h.icon}</div>
                   <p className="highlight-text">{h.text}</p>
                 </motion.div>
               ))}

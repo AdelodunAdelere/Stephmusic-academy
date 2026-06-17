@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/logo.png';
 
 const SERVICES_MENU = [
-  { icon: '🎓', label: 'Courses',  desc: 'Explore all our music programs', href: '/courses' },
-  { icon: '💰', label: 'Pricing',  desc: 'Transparent, flexible plans',    href: '/pricing' },
-  { icon: '👨‍🏫', label: 'Tutors',   desc: 'Meet our expert instructors',   href: '/tutors'  },
+  { label: 'Courses', desc: 'Explore all our music programs', href: '/courses' },
+  { label: 'Pricing', desc: 'Transparent, flexible plans',    href: '/pricing' },
+  { label: 'Tutors',  desc: 'Meet our expert instructors',    href: '/tutors'  },
 ];
 
 const ChevronIcon = ({ open }) => (
@@ -112,12 +112,6 @@ export default function Navbar() {
           transition: background 0.16s;
         }
         .sma-drop-item:hover { background: #F1F5F9; }
-        .sma-drop-icon {
-          width: 38px; height: 38px; border-radius: 10px;
-          background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1rem; flex-shrink: 0;
-        }
         .sma-drop-title { font-size: 0.88rem; font-weight: 600; color: #0F172A; }
         .sma-drop-desc  { font-size: 0.74rem; color: #64748B; margin-top: 1px; }
 
@@ -247,7 +241,6 @@ export default function Navbar() {
                         role="menuitem"
                         onClick={() => setServicesOpen(false)}
                       >
-                        <div className="sma-drop-icon">{item.icon}</div>
                         <div>
                           <div className="sma-drop-title">{item.label}</div>
                           <div className="sma-drop-desc">{item.desc}</div>
@@ -312,7 +305,7 @@ export default function Navbar() {
                       className="sma-mob-sub-item"
                       onClick={() => setMenuOpen(false)}
                     >
-                      <span>{item.icon}</span> {item.label}
+                      {item.label}
                     </Link>
                   ))}
                 </motion.div>

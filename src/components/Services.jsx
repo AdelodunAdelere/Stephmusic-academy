@@ -3,51 +3,39 @@ import { Link } from 'react-router-dom';
 
 const SERVICES = [
   {
-    icon: '🎹',
     title: 'Piano Lessons',
     desc: 'From beginner to advanced — classical, jazz, and contemporary techniques with our expert tutors.',
     color: '#3B82F6',
-    bg: '#EFF6FF',
     href: '/courses',
   },
   {
-    icon: '🎸',
     title: 'Guitar Classes',
     desc: 'Acoustic and electric guitar across all genres — pop, rock, blues, classical, and fingerstyle.',
     color: '#8B5CF6',
-    bg: '#F5F3FF',
     href: '/courses',
   },
   {
-    icon: '🥁',
     title: 'Drum Training',
     desc: 'Master rhythm, timing, and percussion with hands-on training in our soundproofed studios.',
     color: '#EC4899',
-    bg: '#FDF2F8',
     href: '/courses',
   },
   {
-    icon: '🎤',
     title: 'Vocal Coaching',
     desc: 'Develop your singing voice, improve pitch, breath control, and stage performance confidence.',
     color: '#10B981',
-    bg: '#ECFDF5',
     href: '/courses',
   },
   {
-    icon: '🎻',
     title: 'Violin & Strings',
     desc: 'Classical and contemporary string training for all ages and experience levels.',
     color: '#F59E0B',
-    bg: '#FFFBEB',
     href: '/courses',
   },
   {
-    icon: '🎧',
     title: 'Music Production',
     desc: 'Learn beat-making, mixing, and mastering with industry-standard digital audio workstations.',
     color: '#06B6D4',
-    bg: '#ECFEFF',
     href: '/courses',
   },
 ];
@@ -118,12 +106,6 @@ export default function Services() {
         }
         .service-card:hover .service-card-glow { opacity: 1; }
 
-        .service-icon-wrap {
-          width: 52px; height: 52px; border-radius: 14px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1.4rem; margin-bottom: 20px;
-          flex-shrink: 0;
-        }
         .service-title {
           font-size: 1.05rem; font-weight: 700;
           color: #0F172A; margin-bottom: 10px;
@@ -197,13 +179,6 @@ export default function Services() {
                 className="service-card-glow"
                 style={{ boxShadow: `inset 0 0 0 1.5px ${s.color}30, 0 16px 48px ${s.color}18` }}
               />
-
-              <div
-                className="service-icon-wrap"
-                style={{ background: s.bg }}
-              >
-                {s.icon}
-              </div>
 
               <h3 className="service-title">{s.title}</h3>
               <p className="service-desc">{s.desc}</p>

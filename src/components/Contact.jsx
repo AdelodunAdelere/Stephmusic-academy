@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 
 const CONTACT_ITEMS = [
   {
-    icon: '📞',
     label: 'Phone',
     value: '+234 807 080 3041',
     sub: '+234 816 980 3046',
@@ -11,7 +10,6 @@ const CONTACT_ITEMS = [
     color: '#3B82F6',
   },
   {
-    icon: '✉️',
     label: 'Email',
     value: 'info@stephmusicacademy.com',
     sub: 'We reply within 24 hours',
@@ -19,7 +17,6 @@ const CONTACT_ITEMS = [
     color: '#8B5CF6',
   },
   {
-    icon: '📍',
     label: 'Location',
     value: 'Lagos, Nigeria',
     sub: 'In-studio & Online lessons',
@@ -27,7 +24,6 @@ const CONTACT_ITEMS = [
     color: '#10B981',
   },
   {
-    icon: '🕐',
     label: 'Hours',
     value: 'Mon – Sat, 9am – 6pm',
     sub: 'WAT (West Africa Time)',
@@ -99,11 +95,6 @@ export default function Contact() {
         a.contact-info-card:hover {
           border-color: rgba(37,99,235,0.2);
           box-shadow: 0 4px 20px rgba(37,99,235,0.1);
-        }
-        .c-icon {
-          width: 40px; height: 40px; border-radius: 10px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1rem; flex-shrink: 0;
         }
         .c-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94A3B8; margin-bottom: 3px; }
         .c-value { font-size: 0.9rem; font-weight: 600; color: #0F172A; line-height: 1.3; }
@@ -205,9 +196,7 @@ export default function Contact() {
                       className="contact-info-card"
                       {...(item.href ? { href: item.href } : {})}
                     >
-                      <div className="c-icon" style={{ background: `${item.color}18` }}>
-                        {item.icon}
-                      </div>
+                      <div style={{ width: 4, borderRadius: 2, background: item.color, flexShrink: 0, alignSelf: 'stretch' }} />
                       <div>
                         <div className="c-label">{item.label}</div>
                         <div className="c-value">{item.value}</div>
@@ -220,12 +209,12 @@ export default function Contact() {
 
               <div className="contact-social">
                 <a href="https://www.instagram.com/stephmusicng" className="social-btn" target="_blank" rel="noopener noreferrer">
-                  📸 Instagram
+                  Instagram
                 </a>
                 <a href="https://www.youtube.com/@ferefolu" className="social-btn" target="_blank" rel="noopener noreferrer">
-                  ▶️ YouTube
+                  YouTube
                 </a>
-                <a href="#" className="social-btn">📘 Facebook</a>
+                <a href="#" className="social-btn">Facebook</a>
               </div>
             </motion.div>
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const COURSES = [
   {
-    icon: '🎹', color: '#3B82F6', bg: '#EFF6FF',
+    color: '#3B82F6',
     title: 'Piano Lessons',
     tagline: 'Classical · Jazz · Contemporary',
     desc: 'From reading your first notes to performing full concertos, our piano program builds a deep foundation in technique, theory, and musical expression. Suitable for ages 5 and up.',
@@ -12,7 +12,7 @@ const COURSES = [
     schedule: 'Weekdays & Weekends',
   },
   {
-    icon: '🎸', color: '#8B5CF6', bg: '#F5F3FF',
+    color: '#8B5CF6',
     title: 'Guitar Classes',
     tagline: 'Acoustic · Electric · Classical',
     desc: 'Master chords, scales, and technique across styles — from fingerpicking folk to shredding leads. We teach acoustic, electric, and classical guitar for all ages.',
@@ -21,7 +21,7 @@ const COURSES = [
     schedule: 'Weekdays & Weekends',
   },
   {
-    icon: '🥁', color: '#EC4899', bg: '#FDF2F8',
+    color: '#EC4899',
     title: 'Drum Training',
     tagline: 'Rhythm · Timing · Groove',
     desc: 'Develop explosive rhythm, steady timing, and killer groove in our soundproofed drum studios. Great for beginners through touring professionals.',
@@ -30,7 +30,7 @@ const COURSES = [
     schedule: 'Weekdays & Weekends',
   },
   {
-    icon: '🎤', color: '#10B981', bg: '#ECFDF5',
+    color: '#10B981',
     title: 'Vocal Coaching',
     tagline: 'Technique · Performance · Confidence',
     desc: 'Unlock the full power of your voice. Our vocal coaches guide you through breathing, pitch, range expansion, and stage performance — for pop, gospel, RnB, and classical styles.',
@@ -39,7 +39,7 @@ const COURSES = [
     schedule: 'Weekdays & Weekends',
   },
   {
-    icon: '🎻', color: '#F59E0B', bg: '#FFFBEB',
+    color: '#F59E0B',
     title: 'Violin & Strings',
     tagline: 'Classical · Contemporary · Ensemble',
     desc: 'Beautiful, disciplined, and deeply rewarding. Our strings programme covers violin, viola, and cello — from first position through advanced bowing and orchestral technique.',
@@ -48,7 +48,7 @@ const COURSES = [
     schedule: 'Weekdays & Weekends',
   },
   {
-    icon: '🎧', color: '#06B6D4', bg: '#ECFEFF',
+    color: '#06B6D4',
     title: 'Music Production',
     tagline: 'Beats · Mixing · Mastering',
     desc: 'Learn the craft behind the hits. Our production programme covers DAW operation, beat-making, sound design, mixing, and mastering using industry-standard software.',
@@ -118,13 +118,8 @@ export default function CoursesPage() {
         }
         .course-card-top {
           padding: 28px 28px 24px;
-          display: flex; align-items: flex-start; gap: 16px;
           border-bottom: 1px solid rgba(15,23,42,0.06);
-        }
-        .course-icon {
-          width: 52px; height: 52px; border-radius: 14px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1.4rem; flex-shrink: 0;
+          border-left: 4px solid transparent;
         }
         .course-title { font-size: 1.05rem; font-weight: 700; color: #0F172A; margin-bottom: 4px; }
         .course-tagline { font-size: 0.78rem; font-weight: 600; opacity: 0.7; letter-spacing: 0.02em; }
@@ -189,14 +184,9 @@ export default function CoursesPage() {
           >
             {COURSES.map((c) => (
               <motion.div className="course-card" key={c.title} variants={cardVariants}>
-                <div className="course-card-top">
-                  <div className="course-icon" style={{ background: c.bg }}>
-                    {c.icon}
-                  </div>
-                  <div>
-                    <div className="course-title">{c.title}</div>
-                    <div className="course-tagline" style={{ color: c.color }}>{c.tagline}</div>
-                  </div>
+                <div className="course-card-top" style={{ borderLeftColor: c.color }}>
+                  <div className="course-title">{c.title}</div>
+                  <div className="course-tagline" style={{ color: c.color }}>{c.tagline}</div>
                 </div>
                 <div className="course-card-body">
                   <p className="course-desc">{c.desc}</p>
@@ -211,8 +201,8 @@ export default function CoursesPage() {
                 </div>
                 <div className="course-card-footer">
                   <div className="course-meta">
-                    <span>⏱ {c.duration}</span>
-                    <span>📅 {c.schedule}</span>
+                    <span>{c.duration}</span>
+                    <span>{c.schedule}</span>
                   </div>
                   <a href="/#register" className="btn btn-primary btn-sm">Enrol →</a>
                 </div>

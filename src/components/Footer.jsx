@@ -20,10 +20,10 @@ const SERVICES_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { label: 'Instagram', href: 'https://www.instagram.com/stephmusicng', icon: '📸' },
-  { label: 'YouTube',   href: 'https://www.youtube.com/@ferefolu',      icon: '▶️' },
-  { label: 'Facebook',  href: '#',                                        icon: '📘' },
-  { label: 'Twitter/X', href: '#',                                        icon: '🐦' },
+  { label: 'Instagram', href: 'https://www.instagram.com/stephmusicng' },
+  { label: 'YouTube',   href: 'https://www.youtube.com/@ferefolu' },
+  { label: 'Facebook',  href: '#' },
+  { label: 'Twitter/X', href: '#' },
 ];
 
 export default function Footer() {
@@ -92,9 +92,8 @@ export default function Footer() {
 
         /* Contact blurbs */
         .footer-contact-item {
-          display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px;
+          margin-bottom: 12px;
         }
-        .footer-contact-icon { font-size: 0.9rem; margin-top: 1px; }
         .footer-contact-text { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
 
         /* Bottom bar */
@@ -138,7 +137,7 @@ export default function Footer() {
               <div className="footer-social">
                 {SOCIAL_LINKS.map(s => (
                   <a key={s.label} href={s.href} className="footer-social-btn" target="_blank" rel="noopener noreferrer">
-                    {s.icon} {s.label}
+                    {s.label}
                   </a>
                 ))}
               </div>
@@ -168,19 +167,15 @@ export default function Footer() {
             <div>
               <div className="footer-col-title">Get In Touch</div>
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">📞</span>
                 <div className="footer-contact-text">+234 807 080 3041<br />+234 816 980 3046</div>
               </div>
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">✉️</span>
                 <div className="footer-contact-text">info@stephmusicacademy.com</div>
               </div>
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">📍</span>
                 <div className="footer-contact-text">Lagos, Nigeria</div>
               </div>
               <div className="footer-contact-item">
-                <span className="footer-contact-icon">🕐</span>
                 <div className="footer-contact-text">Mon – Sat, 9am – 6pm WAT</div>
               </div>
             </div>

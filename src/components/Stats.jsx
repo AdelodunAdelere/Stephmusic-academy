@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const STATS = [
-  { number: 500,  suffix: '+', label: 'Students Trained',   icon: '🎓', color: '#3B82F6' },
-  { number: 6,    suffix: '',  label: 'Instruments Taught', icon: '🎵', color: '#8B5CF6' },
-  { number: 10,   suffix: '+', label: 'Expert Instructors', icon: '👨‍🏫', color: '#06B6D4' },
-  { number: 98,   suffix: '%', label: 'Student Satisfaction',icon: '⭐', color: '#F59E0B' },
+  { number: 500,  suffix: '+', label: 'Students Trained',   color: '#3B82F6' },
+  { number: 6,    suffix: '',  label: 'Instruments Taught', color: '#8B5CF6' },
+  { number: 10,   suffix: '+', label: 'Expert Instructors', color: '#06B6D4' },
+  { number: 98,   suffix: '%', label: 'Student Satisfaction',color: '#F59E0B' },
 ];
 
 function Counter({ target, suffix, active }) {
@@ -76,12 +76,6 @@ export default function Stats() {
           transition: background 0.25s;
         }
         .stat-card:hover { background: #FAFCFF; }
-        .stat-icon {
-          width: 44px; height: 44px; border-radius: 12px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1.2rem;
-          margin-bottom: 4px;
-        }
         .stat-value {
           font-size: clamp(2rem, 4vw, 2.8rem);
           font-weight: 800; line-height: 1;
@@ -119,9 +113,6 @@ export default function Stats() {
         >
           {STATS.map((s) => (
             <motion.div className="stat-card" key={s.label} variants={itemVariants}>
-              <div className="stat-icon" style={{ background: `${s.color}18` }}>
-                {s.icon}
-              </div>
               <div className="stat-value" style={{ color: s.color }}>
                 <Counter target={s.number} suffix={s.suffix} active={active} />
               </div>

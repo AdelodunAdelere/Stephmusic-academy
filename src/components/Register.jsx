@@ -6,12 +6,12 @@ const LEVELS   = ['Beginner', 'Intermediate', 'Advanced'];
 const SCHEDULES= ['Weekday mornings', 'Weekday afternoons', 'Weekday evenings', 'Weekends'];
 
 const BENEFITS = [
-  { icon: '🎓', text: 'Expert, certified instructors' },
-  { icon: '🗓️', text: 'Flexible scheduling options' },
-  { icon: '🎵', text: 'Personalised curriculum' },
-  { icon: '🏆', text: 'Regular recitals & showcases' },
-  { icon: '💻', text: 'Online & in-studio lessons' },
-  { icon: '📱', text: 'Student progress tracking' },
+  { text: 'Expert, certified instructors' },
+  { text: 'Flexible scheduling options' },
+  { text: 'Personalised curriculum' },
+  { text: 'Regular recitals & showcases' },
+  { text: 'Online & in-studio lessons' },
+  { text: 'Student progress tracking' },
 ];
 
 export default function Register() {
@@ -69,13 +69,6 @@ export default function Register() {
             padding: 80px 24px; background: #F8FAFC;
             font-family: 'Inter', sans-serif;
           }
-          .reg-success-icon {
-            width: 80px; height: 80px; border-radius: 24px;
-            background: linear-gradient(135deg, #2563EB, #818CF8);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; margin: 0 auto 24px;
-            box-shadow: 0 8px 32px rgba(37,99,235,0.38);
-          }
           .reg-success h2 { font-size: 2rem; font-weight: 800; color: #0F172A; margin-bottom: 12px; letter-spacing: -0.02em; font-family: 'Inter', sans-serif; }
           .reg-success p  { color: #64748B; max-width: 420px; line-height: 1.7; margin-bottom: 32px; font-family: 'Inter', sans-serif; }
         `}</style>
@@ -85,7 +78,6 @@ export default function Register() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="reg-success-icon">🎉</div>
             <h2>Welcome to Stephmusic!</h2>
             <p>
               Your registration is confirmed, <strong>{form.firstName}</strong>!
@@ -127,11 +119,11 @@ export default function Register() {
           display: flex; align-items: center; gap: 10px;
           font-size: 0.88rem; color: #475569; font-weight: 500;
         }
-        .reg-benefit-icon {
-          width: 32px; height: 32px; border-radius: 8px;
-          background: #EFF6FF;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 0.9rem; flex-shrink: 0;
+        .reg-benefit::before {
+          content: '';
+          display: inline-block;
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #2563EB; flex-shrink: 0;
         }
 
         /* Form card */
@@ -213,7 +205,6 @@ export default function Register() {
             <div className="reg-benefits">
               {BENEFITS.map((b, i) => (
                 <div className="reg-benefit" key={i}>
-                  <div className="reg-benefit-icon">{b.icon}</div>
                   <span>{b.text}</span>
                 </div>
               ))}
@@ -309,7 +300,7 @@ export default function Register() {
                   </label>
                 </div>
 
-                <button type="submit" className="reg-submit">Complete Registration 🎵</button>
+                <button type="submit" className="reg-submit">Complete Registration</button>
               </form>
             </div>
           </motion.div>

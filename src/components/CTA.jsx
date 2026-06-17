@@ -27,13 +27,6 @@ export default function CTA() {
           position: relative; z-index: 1;
           max-width: 680px; margin: 0 auto;
         }
-        .cta-icon {
-          width: 64px; height: 64px; border-radius: 18px;
-          background: rgba(37,99,235,0.15);
-          border: 1px solid rgba(37,99,235,0.3);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1.8rem; margin: 0 auto 28px;
-        }
         .cta-content h2 {
           font-size: clamp(2rem, 5vw, 3.4rem);
           font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
@@ -86,7 +79,6 @@ export default function CTA() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="cta-icon">🎵</div>
             <h2>
               Ready to start your<br />
               <span className="cta-gradient">musical journey?</span>
